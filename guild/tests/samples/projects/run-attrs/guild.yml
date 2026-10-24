@@ -1,0 +1,69 @@
+op:
+  main: guild.pass
+  run-attrs:
+
+    # Exhaustive list copied from guild.run.CORE_RUN_ATTRS
+    cmd: xxx
+    deps: xxx
+    env: xxx
+    exit_status: xxx
+    flags: xxx
+    host: xxx
+    id: xxx
+    initialized: xxx
+    label: xxx
+    op: xxx
+    pip_freeze: xxx
+    platform: xxx
+    plugins: xxx
+    random_seed: xxx
+    run_params: xxx
+    sourcecode_digest: xxx
+    started: xxx
+    stopped: xxx
+    user: xxx
+    user_flags: xxx
+    vcs_commit: xxx
+
+    # Legal run attrs
+    custom: bar
+    another-custom: baz
+    yet-another-custom:
+      a: A
+      b: 123
+      c: 1.234
+
+boolean-chars:
+  main: guild.pass
+
+  run-attrs:
+    custom:
+      y: 1
+      n: 2
+      Y: 3
+      N: 4
+      a: 5
+      z: 6
+
+  flags:
+    y: 11
+    n: 22
+    Y: 33
+    N: 44
+    a: 55
+    z: 66
+
+logged:
+  run-attrs:
+    opdef-attr: red
+
+logged-core:
+  run-attrs:
+    custom-id: This attr is okay
+    custom-label: This attr is also okay
+
+output-2:
+  main: output
+  output-attrs:
+    xxx: 'xxx: (.*)'
+  output-scalars: off

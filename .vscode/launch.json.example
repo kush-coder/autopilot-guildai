@@ -1,0 +1,55 @@
+{
+    // Example run configurations for Guild commands. These are useful when setting
+    //   breakpoints in Guild's code, i.e. when developing or debugging Guild itself,
+    //   not for debugging your scripts that you are running with guild. Rename this file
+    //   to launch.json for VS Code to use it. Adapt the arguments and cwd below to match
+    //   your desired command.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "guild run",
+            "type": "python",
+            "request": "launch",
+            "module": "guild.main_bootstrap",
+            "args": [
+                "run",
+                "say.py",
+                "-y",
+                "msg=['hi', 'hi2']"
+            ],
+            "cwd": "${workspaceFolder}/guild/tests/samples/projects/batch",
+            "justMyCode": false,
+        },
+        {
+            "name": "guild package",
+            "type": "python",
+            "request": "launch",
+            "module": "guild.main_bootstrap",
+            "args": [
+                "package",
+            ],
+            "cwd": "${workspaceFolder}/examples/sourcecode"
+        },
+        {
+            "name": "guild ls",
+            "type": "python",
+            "request": "launch",
+            "module": "guild.main_bootstrap",
+            "args": [
+                "ls",
+            ],
+        },
+        {
+            "name": "guild diff",
+            "type": "python",
+            "request": "launch",
+            "module": "guild.main_bootstrap",
+            "args": [
+                "diff",
+                "-f",
+                "-c",
+                "diff"
+            ],
+        }
+    ]
+}

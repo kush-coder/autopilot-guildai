@@ -1,0 +1,39 @@
+binary-classifier:
+  description: Train classifier on OpenML blood transfusion data set.
+  references:
+    - https://scikit-learn.org/stable/auto_examples/miscellaneous/plot_display_object_visualization.html
+    - https://www.openml.org/d/1464
+  notebook: plot_display_object_visualization.ipynb
+  flags:
+    penalty:
+      description: Norm used in the penalization
+      nb-replace: 'penalty=([''"].+[''"])'
+      choices: [l1, l2, elasticnet, none]
+    multi-class:
+      description: Solver class (binary or mutinomial) type
+      nb-replace: 'multi_class=([''"].+[''"])'
+      choices: [auto, ovr, multinomial]
+    C:
+      description: Inverse of regularization strength
+      nb-replace: 'C=([\d\.e-]+)'
+      type: float
+    class-weight:
+      description: Whether or not to balance weights based on class frequencies
+      nb-replace: 'class_weight=(["''\w]+)'
+      choices: [null, balanced]
+    solver:
+      description: Algorithm to use in the optimization problem
+      nb-replace: 'solver=([''"].+[''"])'
+      choices: [newton-cg, lbfgs, liblinear, sag, saga]
+    max-iter:
+      description: Maximum number of iterations for LR
+      nb-replace: 'max_iter=(\d+)'
+    l1-ratio:
+      description: Ratio of l1 when penalty is elasticnet
+      nb-replace: 'l1_ratio=(None|[\.\d]+)'
+  output-scalars:
+    test_acc: 'Test accuracy: (\value)'
+    P: 'Precision: (\value)'
+    R: 'Recall: (\value)'
+    AUC: 'Area under the curve: (\value)'
+    AP: 'Average precision: (\value)'

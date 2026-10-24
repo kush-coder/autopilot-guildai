@@ -1,0 +1,30 @@
+basic-tutorial-1:
+  description: Pass flag values as Hydra command args
+  main: my_app_1 +db.driver=${driver} +db.user=${user} +db.password=${password}
+  flags:
+    driver: mysql
+    user: omry
+    password: secret
+
+basic-tutorial-2:
+  description: Use a single config file with Hydra
+  main: my_app_2
+  flags-dest: config:config.yaml
+  flags-import: all
+
+
+basic-tutorial-3:
+  description: Use a Hydra config group
+  main: my_app_3 ${db} ${db-config}
+  flags:
+    db:
+      description: DB configuration to use
+      choices: [mysql, postgresql]
+    db-config:
+      description: >
+        DB config settings for the specified db type
+
+        Specify settings using Hydra syntax, each setting separated by
+        a space.
+
+        Refer to the named config under 'conf' for supported config.

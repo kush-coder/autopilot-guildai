@@ -1,0 +1,223 @@
+-
+  # Named resources - mirror the inline resources above
+  resources:
+    file:
+      - file: file.txt
+        rename: file copy-of-file
+        target-type: copy
+
+    dir:
+      - file: dir
+        name: data
+        target-type: copy
+
+    url:
+      - url: https://guild-pub.s3.amazonaws.com/uat/file.txt
+        rename: file url-file
+        target-type: copy
+
+    file-op:
+      - operation: file
+        select: file.txt
+        rename: file file-op
+
+    dir-op:
+      - operation: dir
+        select: dir
+        rename: dir dir-op
+
+    config:
+      - config: config.yml
+
+    modules:
+      - module: pandas
+      - module: sklearn
+
+    # Alternate resource names
+
+    downstream:
+      - operation: file
+        name: upstream
+        warn-if-empty: no
+
+    # Other
+
+    customizable-file:
+      - file: file.txt
+        rename: file customizable-file
+        target-type: copy
+
+    modified-config:
+      - config: config.yml
+        params:
+          lr: 0.001
+          dropout: 0.4
+        rename: config modified-config
+
+    json-config:
+      - config: config.json
+
+  operations:
+
+    # Dependency types
+
+    file:
+      description: File dependency
+      main: guild.pass
+      requires:
+        - file: file.txt
+
+    dir:
+      description: Directory dependency
+      main: guild.pass
+      requires:
+        - file: dir
+          # name is used when referencing the dependency
+          name: data
+
+    url:
+      description: URL dependency
+      main: guild.pass
+      requires:
+        - url: https://guild-pub.s3.amazonaws.com/uat/file.txt
+
+    file-op:
+      description: Operation file dependency
+      main: guild.pass
+      requires:
+        - operation: file
+          select: file.txt
+
+    dir-op:
+      description: Operation directory dependency
+      main: guild.pass
+      requires:
+        - operation: dir
+          warn-if-empty: no
+
+    config:
+      description: Configuration file dependency
+      main: guild.pass
+      requires:
+        - config: config.yml
+      default-flag-arg-skip: yes
+      flags:
+        lr: null
+        batch-size: null
+        dropout: null
+
+    modules:
+      description: Module dependency
+      main: guild.pass
+      requires:
+        - module: pandas
+        - module: sklearn
+
+    # Alternate resource names
+
+    downstream:
+      description: Downstream operation with upstream dependency
+      main: guild.pass
+      requires:
+        - operation: file
+          name: upstream
+          warn-if-empty: no
+
+    # Other
+
+    customizable-file:
+      description:
+        File dependency that can be customized with flag
+
+        Use 'guild run named-file src=<path>'
+
+      main: guild.pass
+      requires:
+        - file: file.txt
+          flag-name: src
+
+    modified-config:
+      description: Config dependency with modified values
+      main: guild.pass
+      requires:
+        - config: config.yml
+          params:
+            lr: 0.001
+            dropout: 0.4
+      default-flag-arg-skip: yes
+      flags:
+        lr: null
+        batch-size: null
+        dropout: null
+
+    json-config:
+      description: Config dependency using JSON config format
+      main: guild.pass
+      default-flag-arg-skip: yes
+      requires:
+        - config: config.json
+      flags:
+        lr: null
+        batch-size: null
+        dropout: null
+
+    # Broken dependencies
+
+    missing-file:
+      description: Broken file dependency
+      main: guild.pass
+      requires:
+        - file: missing.txt
+
+    missing-named-file:
+      description:
+        Broken file dependency with alternative name
+
+        Named resource is used in messages.
+      main: guild.pass
+      requires:
+        - file: missing.txt
+          name: missing-file
+
+    unsupported-config-format:
+      description: Broken dependency using unsupported config format
+      main: guild.pass
+      requires:
+        - config: file.txt
+
+    missing-module:
+      description: Broken module dependency
+      main: guild.pass
+      requires:
+        - module: missing.module
+
+    all-ops:
+      description: Run all non-broken depepdency operations
+      steps:
+        - file
+        - dir
+        - url
+        - file-op
+        - dir-op
+        - config
+        - modules
+        - downstream
+        - customizable-file src=file-2.txt
+        - modified-config
+        - json-config
+
+    all-resources:
+      description: Run one op that requires all named resources
+      main: guild.pass
+      requires:  # Refs to named resources, defined below
+        - file
+        - dir
+        - url
+        - file-op
+        - dir-op
+        - config
+        - modules
+        - downstream
+        - customizable-file
+        - modified-config
+        - json-config

@@ -1,0 +1,15 @@
+train.py:
+  requires:
+    - operation: prepare_data.py
+      name: data
+
+  flags-import: all
+
+  output-scalars:
+    step: 'Epoch (\step)'
+    loss: '^loss: (\value)'
+    test_acc: 'Accuracy: (\value)'
+    test_loss: '.* Avg loss: (\value)'
+
+  output-attrs:
+    model_digest: Model digest ([a-f0-9]+)

@@ -1,0 +1,121 @@
+- operation-defaults:
+    sourcecode:
+      - '*.py'
+      - guild.yml
+  operations:
+    loss-scalar:
+      description: 'Part 1 of TensorBoard Scalars: Logging training metrics in Keras'
+      flags-import:
+        - lr
+        - train_pct
+        - epochs
+      env:
+        LOGDIR: .
+
+    custom-scalar:
+      description: 'Part 2 of TensorBoard Scalars: Logging training metrics in Keras'
+      flags-import:
+        - train_pct
+        - epochs
+      env:
+        LOGDIR: .
+
+    images:
+      description: Displaying image data in TensorBoard
+      flags-import:
+        - train_epochs
+      env:
+        TRAIN_DATA_LOGDIR: .
+        PLOTS_LOGDIR: .
+        IMAGE_LOGDIR: .
+
+    graphs:
+      description: Examining the TensorFlow Graph
+      flags-import:
+        - train_epochs
+        - batch_size
+        - dropout
+      env:
+        TRAIN_LOGDIR: train
+        FUNC_LOGDIR: func
+
+    hparams:
+      description: Hyperparameter Tuning with the HParams Dashboard
+      flags-import:
+        - num_units
+        - dropout
+        - train_epochs
+        - optimizer
+      objective:
+        maximize: accuracy
+      env:
+        LOGDIR: .
+
+    hparams-grid-search:
+      description: Search over ranges used in Hyperparameter Tuning with the HParams Dashboard
+      steps:
+        - run: hparams
+          flags:
+            num_units: [16, 32]
+            dropout: [0.1, 0.2]
+            optimizer: [adam, sgd]
+
+    hparams-optimize:
+      description: Optimization of hparams with Gaussian Processes
+      steps:
+        - run: hparams
+          flags:
+            num_units: [1, 2, 4, 8, 16, 32, 64]
+            dropout: [0.1, 0.2, 0.3, 0.4, 0.5]
+            optimizer: [adam, sgd]
+          optimizer: gp
+          max-trials: 20
+
+    projector:
+      description: >
+        Visualizing Data using the Embedding Projector in TensorBoard
+
+        NOTE: This demo does not work as expected. See README.md for
+        details. Use projector2 operation as an alternative.
+
+      flags-import:
+        - train_epochs
+        - validation_steps
+      env:
+        LOGDIR: .
+
+    projector2:
+      description: Alternative projector demo
+      env:
+        LOGDIR: .
+
+    audio:
+      description: TensorBoard audio demo
+      main: audio --logdir .
+      flags:
+        duration: 2.0
+        sample_rate: 44100
+        steps: 50
+
+    pr-curve:
+      description: TensorBoard PR curve demo
+      main: pr_curve --logdir .
+
+    text:
+      description: Demonstrate text plugin
+      main: text --logdir .
+
+    all:
+      description: Run all operations using default flag values
+      steps:
+        - loss-scalar
+        - custom-scalar
+        - images
+        - graphs
+        - hparams
+        - hparams-grid-search
+        - hparams-optimize
+        - projector
+        - projector2
+        - audio
+        - pr-curve

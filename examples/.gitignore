@@ -1,0 +1,11 @@
+logs
+runs
+venv
+build
+*.egg-info
+archive
+dist
+published-runs
+.idea
+.vscode
+.guild

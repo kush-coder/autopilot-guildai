@@ -1,0 +1,6 @@
+include LICENSE.txt
+recursive-include guild/completions *
+recursive-include guild/scripts *
+recursive-include guild/view/dist *
+recursive-include guild/templates *
+recursive-include guild/tests *

@@ -1,0 +1,15 @@
+*.pyc
+/build
+/coverage
+/dist
+/guildai.egg-info
+/guild/view/node_modules
+/.coverage
+/.pypi-creds
+/.idea
+/README.html
+published-results
+venv
+.venv
+.DS_Store
+.python-version

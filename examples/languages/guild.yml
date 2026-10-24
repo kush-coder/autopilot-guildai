@@ -1,0 +1,43 @@
+r:
+  description: Sample using R
+  exec: Rscript train.r ${flag_args}
+  flags:
+    x: 0.1
+    noise: 0.1
+  output-scalars:
+    loss: 'loss: (\value)'
+
+bash:
+  description: Sample using Bash
+  exec: ./train.sh ${learning-rate} ${batch-size}
+  flags:
+    learning-rate: 0.1
+    batch-size: 100
+
+bash-2:
+  description: Sample using Bash and environment variables
+  exec: ./train-2.sh
+  flags:
+    learning-rate:
+      default: 0.1
+      env-name: LR
+    batch-size:
+      default: 100
+      env-name: BS
+
+java:
+  description: Sample using Java
+  exec: bash -c "javac Train.java &&
+                 java -cp .guild/sourcecode Train ${learning-rate} ${batch-size}"
+  flags:
+    learning-rate: 0.1
+    batch-size: 100
+
+julia:
+  description: Sample using Julia
+  exec: julia train.jl ${flag_args}
+  flags:
+    x: 0.1
+    noise: 0.1
+  output-scalars:
+    loss: 'loss: (\value)'
