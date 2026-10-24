@@ -8,7 +8,7 @@ Pillow>=5.0
 PyYAML>=2.12
 Werkzeug>=0.15
 chardet>=3.0.4
-click>=8
+click>=8.5.0
 daemonize>=2.4.7
 debugpy
 filelock>=3.0.12
