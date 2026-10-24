@@ -15,7 +15,7 @@ filelock>=3.0.12
 importlib-metadata;python_version<"3.8"
 jinja2>=3.0.3
 natsort
-numpy>=1.16
+numpy>=2.5.4
 pip
 pkginfo
 protobuf<5
